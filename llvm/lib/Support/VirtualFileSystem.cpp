@@ -2832,6 +2832,9 @@ StringRef JSONWriter::containedPart(StringRef Parent, StringRef Path) {
 void JSONWriter::startDirectory(StringRef Path) {
   StringRef Name =
       DirStack.empty() ? Path : containedPart(DirStack.back(), Path);
+  if (Name.empty()) {
+    return;
+  }
   DirStack.push_back(Path);
   unsigned Indent = getDirIndent();
   OS.indent(Indent) << "{\n";
